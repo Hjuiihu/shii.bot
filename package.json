@@ -1,0 +1,17 @@
+{
+  "name": "shii.bot",
+  "version": "1.0.0",
+  "main": "src/shii.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Hjuiihu",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "dependencies": {
+    "discord.js": "^14.17.3",
+    "dotenv": "^16.4.7"
+  }
+}
