@@ -1,7 +1,7 @@
 {
-  "name": "shii.bot",
+  "name": "shaii.bot",
   "version": "1.0.0",
-  "main": "src/shii.js",
+  "main": "src/shaii.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -12,6 +12,7 @@
   "description": "",
   "dependencies": {
     "discord.js": "^14.17.3",
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "mysql2": "^3.12.0"
   }
 }
