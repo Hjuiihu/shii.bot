@@ -16,7 +16,7 @@ const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
     console.log('Déploiement des commandes globales...');
 
     await rest.put(
-      Routes.applicationCommands(process.env.BOT_ID),
+      Routes.applicationCommands(process.env.CLIENT_ID),
       { body: shaiislashcommands.map(command => command.toJSON()) }
     );
 

@@ -2,11 +2,16 @@ const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('ping')  // Le nom de la commande (c'est ce que l'utilisateur tapera après le "/")
-    .setDescription('Répond avec Pong !'),  // Description de la commande, affichée dans Discord
+    .setName('ping')
+    .setDescription('Répond avec "UHhhhh?!"'),
 
   async execute(interaction) {
-    // Répondre à l'interaction avec "Pong!"
-    await interaction.reply('UHHhhh?!');
+    console.log('Commande /ping reçue');  // Log pour voir si la commande est bien reçue
+    try {
+      await interaction.reply('UHhhhh?!');
+    } catch (error) {
+      console.error('Erreur lors de l\'exécution de la commande /ping:', error);
+      await interaction.reply({ content: 'Une erreur est survenue en essayant de répondre.', ephemeral: true });
+    }
   },
 };
