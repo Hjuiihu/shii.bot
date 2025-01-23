@@ -6,6 +6,7 @@ const path = require('path');
 const shaii = new Client({
   intents: [
     IntentsBitField.Flags.Guilds,
+    IntentsBitField.Flags.GuildMembers,
     IntentsBitField.Flags.GuildMessages,
     IntentsBitField.Flags.MessageContent,
   ],
@@ -39,13 +40,13 @@ for (const file of ShaiicmdFiles) {
 const ShaiieventFiles = shaiisys.readdirSync(path.resolve(__dirname, '../events')).filter(file => file.endsWith('.js'));
 
 for (const file of ShaiieventFiles) {
-  const event = require(path.resolve(__dirname, '../events', file));
-  if (event.once) {
-    shaii.once(event.name, (...args) => event.execute(...args, shaii));
+  const Shaiievent = require(path.resolve(__dirname, '../events', file));
+  if (Shaiievent.once) {
+    shaii.once(Shaiievent.name, (...args) => Shaiievent.execute(...args, shaii));
   } else {
-    shaii.on(event.name, (...args) => event.execute(...args, shaii));
+    shaii.on(Shaiievent.name, (...args) => Shaiievent.execute(...args, shaii));
   }
-  console.log(`Événement chargé: ${event.name}`);
+  console.log(`Événement chargé: ${Shaiievent.name}`);
 }
 
 // Gérer les messages classiques, comme les salutations
@@ -60,3 +61,17 @@ shaii.on('messageCreate', (message) => {
 
 // Exporter le client
 module.exports = shaii;
+
+// ��█    █▄ ��█   ��█  ��█
+//      
+//                -%#-
+//               *@@@@*
+//              -@@%%@@-
+//        :====:-@@@@@@=:====:
+//      *@@@@@@@@*+##@#+@@@@@@@*
+//       #@@@#@%##%.++=#%@*@@@#  by Hjuiihu & Friends
+//        -*@@%***-  :%@@@@@*-     ▄▄▄·  ▐ ▄  ▄▄▄·
+//           :#@@%+-%+****:       ▐█ ▀█ •█▌▐█▐█ ▀█ ▪
+//          -@@@@%@-@@%@@@@-      ▄█▀▀█ ▐█▐▐▌▄█▀▀█
+//          #@@%%@@=+@@@%@@#      ▐█ ▪▐▌██▐█▌▐█ ▪▐▌
+//          #@@@@*:  :#@@@@#       ▀  ▀ ▀▀ █▪ ▀  ▀

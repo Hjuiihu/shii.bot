@@ -5,15 +5,15 @@ module.exports = {
 
     if (!interaction.isCommand()) return;
 
-    const command = shaii.commands.get(interaction.commandName);
-    if (!command) {
+    const shaiicmd = shaii.commands.get(interaction.commandName);
+    if (!shaiicmd) {
       console.error(`Commande inconnue : ${interaction.commandName}`);
       return;
     }
 
     try {
       console.log(`Exécution de la commande : ${interaction.commandName}`);
-      await command.execute(interaction);
+      await shaiicmd.execute(interaction);
     } catch (error) {
       console.error(`Erreur lors de l'exécution de la commande ${interaction.commandName}:`, error);
 
