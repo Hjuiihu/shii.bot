@@ -4,7 +4,7 @@ const shaii = require('./Shaii/shaiiclient'); // Import du client configuré
 // Lorsque le bot est prêt
 shaii.on('ready', () => {
   console.log(`
-              -%#-
+          -%#-
          *@@@@*
         -@@%%@@-
   :====:-@@@@@@=:====:

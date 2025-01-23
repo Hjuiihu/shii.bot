@@ -3,15 +3,33 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
   data: new SlashCommandBuilder()
     .setName('ping')
-    .setDescription('Répond avec "UHhhhh?!"'),
+    .setDescription('Répond avec UHhhhh?!'),
 
   async execute(interaction) {
-    console.log('Commande /ping reçue');  // Log pour voir si la commande est bien reçue
     try {
-      await interaction.reply('UHhhhh?!');
+      console.log('Commande /ping reçue');
+
+      // Empêche les réponses multiples
+      if (interaction.deferred || interaction.replied) {
+        console.warn('Interaction déjà différée ou répondue, annulation.');
+        return;
+      }
+
+      // Diffère la réponse pour éviter un timeout
+      await interaction.deferReply();
+
+      // Répond avec le message final
+      await interaction.editReply('UHhhhh?!');
     } catch (error) {
       console.error('Erreur lors de l\'exécution de la commande /ping:', error);
-      await interaction.reply({ content: 'Une erreur est survenue en essayant de répondre.', ephemeral: true });
+
+      // Gestion des erreurs
+      if (!interaction.replied && !interaction.deferred) {
+        await interaction.reply({
+          content: 'Une erreur est survenue en essayant de répondre.',
+          flags: 64,
+        });
+      }
     }
   },
 };

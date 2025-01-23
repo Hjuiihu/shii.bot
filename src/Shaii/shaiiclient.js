@@ -11,39 +11,34 @@ const shaii = new Client({
   ],
 });
 
-// Charger les commandes (non slash)
+// Charger les commandes (slash et classiques)
 shaii.commands = new Collection();
-const commandFiles = shaiisys.readdirSync(path.resolve(__dirname, '../commands')).filter(file => file.endsWith('.js'));
+const ShaiicmdFiles = shaiisys.readdirSync(path.resolve(__dirname, '../commands')).filter(file => file.endsWith('.js'));
 
-if (commandFiles.length === 0) {
+if (ShaiicmdFiles.length === 0) {
   console.log('Aucune commande à charger dans le dossier "commands".');
 }
 
-for (const file of commandFiles) {
+for (const file of ShaiicmdFiles) {
   const shaiicmd = require(path.resolve(__dirname, '../commands', file));
-  shaii.commands.set(shaiicmd.name, shaiicmd); // Charger les commandes classiques
-  console.log(`Commande classique chargée: ${shaiicmd.name}`);
+
+  if (shaiicmd.data) {
+    // Pour les commandes Slash
+    shaii.commands.set(shaiicmd.data.name, shaiicmd);
+    console.log(`Commande Slash chargée: ${shaiicmd.data.name}`);
+  } else if (shaiicmd.name) {
+    // Pour les commandes classiques
+    shaii.commands.set(shaiicmd.name, shaiicmd);
+    console.log(`Commande classique chargée: ${shaiicmd.name}`);
+  } else {
+    console.warn(`Commande non valide : ${file}`);
+  }
 }
 
-// Charger les interactions slash
+// Charger les événements
+const ShaiieventFiles = shaiisys.readdirSync(path.resolve(__dirname, '../events')).filter(file => file.endsWith('.js'));
 
-shaii.on('interactionCreate', async (interaction) => {
-  if (!interaction.isCommand()) return;
-
-  const shaiislashcommands = shaii.commands.get(interaction.commandName);
-  if (!shaiislashcommands) return;
-
-  try { 
-    await shaiislashcommands.execute(interaction); // Exécute les commandes slash
-  } catch (error) {
-    console.error(error);
-    await interaction.reply({ content: 'Une erreur est survenue lors de l\'exécution de cette commande.', ephemeral: true });
-  }
-});
-
-const eventFiles = shaiisys.readdirSync(path.resolve(__dirname, '../events')).filter(file => file.endsWith('.js'));
-
-for (const file of eventFiles) {
+for (const file of ShaiieventFiles) {
   const event = require(path.resolve(__dirname, '../events', file));
   if (event.once) {
     shaii.once(event.name, (...args) => event.execute(...args, shaii));
@@ -53,7 +48,7 @@ for (const file of eventFiles) {
   console.log(`Événement chargé: ${event.name}`);
 }
 
-// Ecoute la commande "greetings" si le message correspond à une salution
+// Gérer les messages classiques, comme les salutations
 shaii.on('messageCreate', (message) => {
   if (message.author.bot) return; // Ignore les messages des autres bots
   
@@ -63,4 +58,5 @@ shaii.on('messageCreate', (message) => {
   }
 });
 
+// Exporter le client
 module.exports = shaii;

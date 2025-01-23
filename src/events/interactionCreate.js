@@ -1,31 +1,27 @@
 module.exports = {
   name: 'interactionCreate',
   async execute(interaction, shaii) {
-    // Vérifie si l'interaction est une commande
+    console.log(`Interaction reçue : ${interaction.commandName}`);
+
     if (!interaction.isCommand()) return;
 
-    // Récupère la commande basée sur le nom
-    const shaiicmd = shaii.commands.get(interaction.commandName);
-    if (!shaiicmd) return;
+    const command = shaii.commands.get(interaction.commandName);
+    if (!command) {
+      console.error(`Commande inconnue : ${interaction.commandName}`);
+      return;
+    }
 
     try {
-      // Exécute la commande
-      await shaiicmd.execute(interaction);
+      console.log(`Exécution de la commande : ${interaction.commandName}`);
+      await command.execute(interaction);
     } catch (error) {
-      console.error(`Erreur lors de l'exécution de la commande ${interaction.commandName}:`, error`\nGuilde : ${interaction.guild?.name || 'DM'} (${interaction.guildId || 'DM'})`,
-        `\nUtilisateur : ${interaction.user.tag} (${interaction.user.id})`
-      );
+      console.error(`Erreur lors de l'exécution de la commande ${interaction.commandName}:`, error);
 
-      // Répond à l'utilisateur en cas d'erreur
-      if (interaction.replied || interaction.deferred) {
-        await interaction.followUp({ 
-          content: 'Une erreur est survenue lors de l\'exécution de cette commande.', 
-          ephemeral: true,
-        });
-      } else {
-        await interaction.reply({ 
-          content: 'Une erreur est survenue lors de l\'exécution de cette commande.', 
-          ephemeral: true,
+      // Empêche une double réponse en vérifiant l'état de l'interaction
+      if (!interaction.replied && !interaction.deferred) {
+        await interaction.reply({
+          content: 'Une erreur est survenue lors de l\'exécution de cette commande.',
+          flags: 64,
         });
       }
     }
