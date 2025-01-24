@@ -14,27 +14,40 @@ const shaii = new Client({
 
 // Charger les commandes (slash et classiques)
 shaii.commands = new Collection();
-const ShaiicmdFiles = shaiisys.readdirSync(path.resolve(__dirname, '../commands')).filter(file => file.endsWith('.js'));
 
-if (ShaiicmdFiles.length === 0) {
-  console.log('Aucune commande à charger dans le dossier "commands".');
-}
+//Fonction pour charger les commandes depuis un dossier
+function loadCommands(dir) { 
+  const ShaiicmdFiles = shaiisys.readdirSync(dir, { withFileTypes: true });
 
-for (const file of ShaiicmdFiles) {
-  const shaiicmd = require(path.resolve(__dirname, '../commands', file));
+  if (ShaiicmdFiles.length === 0) {
+    console.log('Aucune commande à charger dans le dossier "commands".');
+  }
 
-  if (shaiicmd.data) {
-    // Pour les commandes Slash
-    shaii.commands.set(shaiicmd.data.name, shaiicmd);
-    console.log(`Commande Slash chargée: ${shaiicmd.data.name}`);
-  } else if (shaiicmd.name) {
-    // Pour les commandes classiques
-    shaii.commands.set(shaiicmd.name, shaiicmd);
-    console.log(`Commande classique chargée: ${shaiicmd.name}`);
-  } else {
-    console.warn(`Commande non valide : ${file}`);
+  for (const file of ShaiicmdFiles) {
+    const fullPath = path.resolve(dir, file.name);
+    if (file.isDirectory()) {
+      loadCommands(fullPath); // appel récursif pour les dossiers
+    } else if (file.name.endsWith('.js')) {
+      const shaiicmd = require(fullPath);
+
+      if (shaiicmd.data) {
+        // pour les commandes slash
+        shaii.commands.set(shaiicmd.data.name, shaiicmd);
+        console.log(`Commande Slash chargée : ${shaiicmd.data.name}`);
+      } else if (shaiicmd.name) {
+        // pour les commandes  classiques
+        shaii.commands.set(shaiicmd.name, shaiicmd);
+        console.log(`commande classique chargée : ${shaiicmd.name}`);
+      } else {
+        console.log(`Commande non valide : ${file.name}`);
+      }
+    }
   }
 }
+
+// Charger les commandes depuis le dossier `commands` et `commands/premium`
+loadCommands(path.resolve(__dirname, '../commands', '../commands/premium'));
+
 
 // Charger les événements
 const ShaiieventFiles = shaiisys.readdirSync(path.resolve(__dirname, '../events')).filter(file => file.endsWith('.js'));
