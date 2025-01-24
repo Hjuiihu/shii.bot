@@ -5,6 +5,17 @@ const { REST, Routes } = require('discord.js');
 const shaiislashcommands = [
   // Ajoutez les commandes ici
   new SlashCommandBuilder().setName('ping').setDescription('Répond avec "UHhhhh?!"'),
+  
+  new SlashCommandBuilder()
+  .setName('clear')
+  .setDescription('❱•❰ Ana. Vous fait le Nettoyages ^^')
+  .addIntegerOption(option =>
+    option.setName('amount')
+      .setDescription('Le nombre de messages à supprimer (1-100)')
+      .setRequired(true)
+      .setMinValue(1)
+      .setMaxValue(100)
+  ),
 ];
 
 //créer une instance REST pour interagir avec l'application
