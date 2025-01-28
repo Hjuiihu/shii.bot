@@ -22,30 +22,30 @@ const shaiislashcommands = [
 
  // Commande Textme
  new SlashCommandBuilder()
- .setName('textme')
- .setDescription('Envoyer ou modifier un message via le bot.')
- // Option obligatoire en premier
- .addChannelOption(option =>
-   option.setName('salon')
-     .setDescription('Le salon où envoyer le message.')
-     .setRequired(true)
- )
- // Options facultatives ensuite
- .addStringOption(option =>
-   option.setName('contenu')
-     .setDescription('Le contenu du message.')
-     .setRequired(false)
- )
- .addStringOption(option =>
-   option.setName('image')
-     .setDescription('URL de l\'image à attacher.')
-     .setRequired(false)
- )
- .addStringOption(option =>
-   option.setName('modifier')
-     .setDescription('ID du message à modifier (doit être envoyé par le bot).')
-     .setRequired(false)
- ),
+  .setName('textme')
+  .setDescription('Envoyer ou modifier un message via le bot.')
+  // Option obligatoire en premier
+  .addChannelOption(option =>
+    option.setName('salon')
+      .setDescription('Le salon où envoyer le message.')
+      .setRequired(true)
+  )
+  // Options facultatives ensuite
+  .addStringOption(option =>
+    option.setName('contenu')
+      .setDescription('Le contenu du message.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('image')
+      .setDescription('URL de l\'image à attacher.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('modifier')
+      .setDescription('ID du message à modifier (doit être envoyé par le bot).')
+      .setRequired(false)
+  ),
 ];
 
 //créer une instance REST pour interagir avec l'application

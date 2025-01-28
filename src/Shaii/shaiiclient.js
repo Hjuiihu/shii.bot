@@ -24,6 +24,7 @@ function loadCommands(dir) {
   }
 
   for (const file of ShaiicmdFiles) {
+    console.log(`Fichier trouvé : ${file.name}`);
     const fullPath = path.resolve(dir, file.name);
     if (file.isDirectory()) {
       loadCommands(fullPath); // appel récursif pour les dossiers
@@ -45,9 +46,14 @@ function loadCommands(dir) {
   }
 }
 
-// Charger les commandes depuis le dossier `commands` et `commands/premium`
-loadCommands(path.resolve(__dirname, '../commands', '../commands/premium'));
+// Charger les commandes depuis `commands` et ses sous-dossiers
+loadCommands(path.resolve(__dirname, '../commands'));
 
+// Charger les commandes depuis `commands/premium` si nécessaire
+loadCommands(path.resolve(__dirname, '../commands/premium'));
+
+// **Ajoute cette ligne après le chargement des commandes**
+console.log('Commandes enregistrées :', shaii.commands.map(cmd => cmd.data?.name || cmd.name));
 
 // Charger les événements
 const ShaiieventFiles = shaiisys.readdirSync(path.resolve(__dirname, '../events')).filter(file => file.endsWith('.js'));
