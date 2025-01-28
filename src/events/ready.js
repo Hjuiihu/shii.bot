@@ -16,5 +16,11 @@ module.exports = {
         }
       );
     });
+
+    //logs du nombre de server et leurs nom
+    const serverCount = shaii.guilds.cache.size;
+    const serverNames = shaii.guilds.cache.map((guild) => guild.name).join(' | ');
+    console.log(`❱•❰ Ana. est connecté à ${serverCount} serveurs :`);
+    console.log(serverNames);
   },
 };

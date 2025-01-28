@@ -46,6 +46,86 @@ const shaiislashcommands = [
       .setDescription('ID du message à modifier (doit être envoyé par le bot).')
       .setRequired(false)
   ),
+
+  // Commande Shaiiembed
+ new SlashCommandBuilder()
+  .setName('shaiiembed')
+  .setDescription('Créer un message Embed personnalisé.')
+  .addChannelOption(option =>
+    option.setName('salon')
+      .setDescription('Salon où envoyer l\'Embed.')
+      .setRequired(true)
+  )
+  .addStringOption(option =>
+    option.setName('titre')
+      .setDescription('Titre de l\'Embed.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('description')
+      .setDescription('Description de l\'Embed.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('couleur')
+      .setDescription('Couleur de l\'Embed (HEX ou nom de couleur standard).')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('url')
+      .setDescription('Lien associé au titre de l\'Embed.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('author')
+      .setDescription('Nom de l\'auteur de l\'Embed.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('author_icon')
+      .setDescription('URL de l\'icône de l\'auteur.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('footer')
+      .setDescription('Texte du bas de l\'Embed.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('footer_icon')
+      .setDescription('URL de l\'icône du footer.')
+      .setRequired(false)
+  )
+  .addBooleanOption(option =>
+    option.setName('timestamp')
+      .setDescription('Ajouter un timestamp à l\'Embed.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('image')
+      .setDescription('URL de l\'image pour l\'Embed.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('thumbnail')
+      .setDescription('URL de la miniature pour l\'Embed.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('field1_name')
+      .setDescription('Nom du premier champ.')
+      .setRequired(false)
+  )
+  .addStringOption(option =>
+    option.setName('field1_value')
+      .setDescription('Valeur du premier champ.')
+      .setRequired(false)
+  )
+  .addBooleanOption(option =>
+    option.setName('field1_inline')
+      .setDescription('Afficher le champ 1 en ligne ?')
+      .setRequired(false)
+  ),
 ];
 
 //créer une instance REST pour interagir avec l'application
