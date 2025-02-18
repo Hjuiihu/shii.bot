@@ -4,7 +4,7 @@ const mysql = require('mysql2');
 const shaiisql = mysql.createPool({
   host: 'localhost',    // Hôte de la base de données
   user: 'root',         // Utilisateur MySQL
-  password: '', // Mot de passe MySQL
+  password: '',         // Mot de passe MySQL
   database: 'shaii.bot',   // Nom de la base de données
   waitForConnections: true,
   connectionLimit: 10,
@@ -20,10 +20,10 @@ shaiisql.getConnection((err, connection) => {
   }
 });
 
-// Créer une table pour les guildes
+// Créer une table pour les guildes avec un guildId de taille réduite
 shaiisql.query(`
   CREATE TABLE IF NOT EXISTS guilds (
-    guildId VARCHAR(255) PRIMARY KEY,
+    guildId VARCHAR(20) PRIMARY KEY,
     guildName VARCHAR(255) NOT NULL
   )
 `, (err) => {
